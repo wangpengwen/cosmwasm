@@ -48,7 +48,7 @@ pub fn handle<S: Storage + 'static, A: Api + 'static, T: Serialize + JsonSchema>
     msg: T,
 ) -> HandleResult {
     match to_vec(&msg) {
-        Err(e) => HandleResult::Err(e.to_string()),
+        Err(e) => HandleResult(InitResult::Err(e.to_string())),
         Ok(serialized_msg) => call_handle(instance, &env, &serialized_msg).unwrap(),
     }
 }

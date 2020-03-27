@@ -96,14 +96,14 @@ fn dequeue<S: Storage, A: Api>(deps: &mut Extern<S, A>, _env: Env) -> Result<Han
     // find the first element in the queue and extract value
     let first = deps.storage.range(None, None, Order::Ascending).next();
 
-    let mut res = HandleResponse::default();
+    let mut res = InitResponse::default();
     if let Some((k, v)) = first {
         // remove from storage and return old value
         deps.storage.remove(&k);
         res.data = Some(Binary(v));
-        Ok(res)
+        Ok(HandleResponse(res))
     } else {
-        Ok(res)
+        Ok(HandleResponse(res))
     }
 }
 

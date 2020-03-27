@@ -84,7 +84,7 @@ fn do_release<S: Storage, A: Api>(deps: &mut Extern<S, A>, env: Env) -> Result<H
     if env.message.signer == state.verifier {
         let to_addr = deps.api.human_address(&state.beneficiary)?;
         let from_addr = deps.api.human_address(&env.contract.address)?;
-        let res = HandleResponse {
+        let res = InitResponse {
             log: vec![
                 log("action", "release"),
                 log("destination", to_addr.as_str()),
@@ -96,7 +96,7 @@ fn do_release<S: Storage, A: Api>(deps: &mut Extern<S, A>, env: Env) -> Result<H
             }],
             data: None,
         };
-        Ok(res)
+        Ok(HandleResponse(res))
     } else {
         unauthorized()
     }

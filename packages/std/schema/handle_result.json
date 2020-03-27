@@ -1,28 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "HandleResult",
-  "anyOf": [
+  "allOf": [
     {
-      "type": "object",
-      "required": [
-        "ok"
-      ],
-      "properties": {
-        "ok": {
-          "$ref": "#/definitions/HandleResponse"
-        }
-      }
-    },
-    {
-      "type": "object",
-      "required": [
-        "err"
-      ],
-      "properties": {
-        "err": {
-          "type": "string"
-        }
-      }
+      "$ref": "#/definitions/InitResult"
     }
   ],
   "definitions": {
@@ -130,7 +111,10 @@
         }
       ]
     },
-    "HandleResponse": {
+    "HumanAddr": {
+      "type": "string"
+    },
+    "InitResponse": {
       "type": "object",
       "required": [
         "log",
@@ -161,8 +145,31 @@
         }
       }
     },
-    "HumanAddr": {
-      "type": "string"
+    "InitResult": {
+      "anyOf": [
+        {
+          "type": "object",
+          "required": [
+            "ok"
+          ],
+          "properties": {
+            "ok": {
+              "$ref": "#/definitions/InitResponse"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "err"
+          ],
+          "properties": {
+            "err": {
+              "type": "string"
+            }
+          }
+        }
+      ]
     },
     "LogAttribute": {
       "type": "object",

@@ -75,36 +75,11 @@ impl InitResult {
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, JsonSchema)]
-pub struct HandleResponse {
-    // let's make the positive case a struct, it contrains Msg: {...}, but also Data, Log, maybe later Events, etc.
-    pub messages: Vec<CosmosMsg>,
-    pub log: Vec<LogAttribute>, // abci defines this as string
-    pub data: Option<Binary>,   // abci defines this as bytes
-}
+pub struct HandleResponse(pub InitResponse);
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "lowercase")]
-pub enum HandleResult {
-    Ok(HandleResponse),
-    Err(String),
-}
-
-impl HandleResult {
-    // unwrap will panic on err, or give us the real data useful for tests
-    pub fn unwrap(self) -> HandleResponse {
-        match self {
-            HandleResult::Err(msg) => panic!("Unexpected error: {}", msg),
-            HandleResult::Ok(res) => res,
-        }
-    }
-
-    pub fn is_err(&self) -> bool {
-        match self {
-            HandleResult::Err(_) => true,
-            _ => false,
-        }
-    }
-}
+pub struct HandleResult(pub InitResult);
 
 #[cfg(test)]
 mod test {
